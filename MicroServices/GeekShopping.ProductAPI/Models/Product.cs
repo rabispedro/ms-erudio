@@ -27,5 +27,5 @@ public class Product : BaseEntity
 
 	[Column("image_url")]
 	[StringLength(300)]
-	public string? ImageUlr { get; set; }
+	public string? ImageUrl { get; set; }
 }

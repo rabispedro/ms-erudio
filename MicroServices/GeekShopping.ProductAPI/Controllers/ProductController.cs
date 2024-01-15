@@ -63,6 +63,6 @@ public class ProductController : ControllerBase
 		if (!isSucceded)
 			return BadRequest();
 		
-		return NoContent();
+		return Ok(isSucceded);
 	}
 }
