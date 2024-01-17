@@ -10,9 +10,9 @@
 			"request": "launch",
 			"preLaunchTask": "build",
 			// If you have changed target frameworks, make sure to update the program path.
-			"program": "${workspaceFolder}/MsErudio/bin/Debug/net6.0/MsErudio.dll",
+			"program": "${workspaceFolder}/MicroServices/GeekShopping.IdentityServer/bin/Debug/net6.0/GeekShopping.IdentityServer.dll",
 			"args": [],
-			"cwd": "${workspaceFolder}/MsErudio",
+			"cwd": "${workspaceFolder}/MicroServices/GeekShopping.IdentityServer",
 			"stopAtEntry": false,
 			// Enable launching a web browser when ASP.NET Core starts. For more information: https://aka.ms/VSCode-CS-LaunchJson-WebBrowser
 			"serverReadyAction": {
