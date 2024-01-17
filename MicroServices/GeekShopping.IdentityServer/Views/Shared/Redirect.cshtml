@@ -1,7 +1,4 @@
-@page
-@model ms_erudio.Pages.Redirect.IndexModel
-@{
-}
+@model RedirectViewModel
 
 <div class="redirect-page">
     <div class="lead">
@@ -10,5 +7,5 @@
     </div>
 </div>
 
-<meta http-equiv="refresh" content="0;url=@Model.RedirectUri" data-url="@Model.RedirectUri">
+<meta http-equiv="refresh" content="0;url=@Model.RedirectUrl" data-url="@Model.RedirectUrl">
 <script src="~/js/signin-redirect.js"></script>

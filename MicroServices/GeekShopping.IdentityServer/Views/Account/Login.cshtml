@@ -1,5 +1,4 @@
-@page
-@model ms_erudio.Pages.Login.Index
+@model LoginViewModel
 
 <div class="login-page">
     <div class="lead">
@@ -11,7 +10,7 @@
 
     <div class="row">
 
-        @if (Model.View.EnableLocalLogin)
+        @if (Model.EnableLocalLogin)
         {
             <div class="col-sm-6">
                 <div class="card">
@@ -20,39 +19,37 @@
                     </div>
 
                     <div class="card-body">
-                        <form asp-page="/Account/Login/Index">
-                            <input type="hidden" asp-for="Input.ReturnUrl" />
+                        <form asp-route="Login">
+                            <input type="hidden" asp-for="ReturnUrl" />
 
                             <div class="form-group">
-                                <label asp-for="Input.Username"></label>
-                                <input class="form-control" placeholder="Username" asp-for="Input.Username" autofocus>
+                                <label asp-for="Username"></label>
+                                <input class="form-control" placeholder="Username" asp-for="Username" autofocus>
                             </div>
                             <div class="form-group">
-                                <label asp-for="Input.Password"></label>
-                                <input type="password" class="form-control" placeholder="Password" asp-for="Input.Password" autocomplete="off">
+                                <label asp-for="Password"></label>
+                                <input type="password" class="form-control" placeholder="Password" asp-for="Password" autocomplete="off">
                             </div>
-                            
-                            @if (Model.View.AllowRememberLogin)
+                            @if (Model.AllowRememberLogin)
                             {
                                 <div class="form-group">
                                     <div class="form-check">
-                                        <input class="form-check-input" asp-for="Input.RememberLogin">
-                                        <label class="form-check-label" asp-for="Input.RememberLogin">
+                                        <input class="form-check-input" asp-for="RememberLogin">
+                                        <label class="form-check-label" asp-for="RememberLogin">
                                             Remember My Login
                                         </label>
                                     </div>
                                 </div>
                             }
-                            
-                            <button class="btn btn-primary" name="Input.Button" value="login">Login</button>
-                            <button class="btn btn-secondary" name="Input.Button" value="cancel">Cancel</button>
+                            <button class="btn btn-primary" name="button" value="login">Login</button>
+                            <button class="btn btn-secondary" name="button" value="cancel">Cancel</button>
                         </form>
                     </div>
                 </div>
             </div>
         }
 
-        @if (Model.View.VisibleExternalProviders.Any())
+        @if (Model.VisibleExternalProviders.Any())
         {
             <div class="col-sm-6">
                 <div class="card">
@@ -61,13 +58,14 @@
                     </div>
                     <div class="card-body">
                         <ul class="list-inline">
-                            @foreach (var provider in Model.View.VisibleExternalProviders)
+                            @foreach (var provider in Model.VisibleExternalProviders)
                             {
                                 <li class="list-inline-item">
                                     <a class="btn btn-secondary"
-                                       asp-page="/ExternalLogin/Challenge"
+                                       asp-controller="External"
+                                       asp-action="Challenge"
                                        asp-route-scheme="@provider.AuthenticationScheme"
-                                       asp-route-returnUrl="@Model.Input.ReturnUrl">
+                                       asp-route-returnUrl="@Model.ReturnUrl">
                                         @provider.DisplayName
                                     </a>
                                 </li>
@@ -78,7 +76,7 @@
             </div>
         }
 
-        @if (!Model.View.EnableLocalLogin && !Model.View.VisibleExternalProviders.Any())
+        @if (!Model.EnableLocalLogin && !Model.VisibleExternalProviders.Any())
         {
             <div class="alert alert-warning">
                 <strong>Invalid login request</strong>

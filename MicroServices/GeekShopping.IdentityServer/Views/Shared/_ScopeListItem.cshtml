@@ -1,11 +1,10 @@
-@using ms_erudio.Pages.Ciba
 @model ScopeViewModel
 
 <li class="list-group-item">
     <label>
         <input class="consent-scopecheck"
                type="checkbox"
-               name="Input.ScopesConsented"
+               name="ScopesConsented"
                id="scopes_@Model.Value"
                value="@Model.Value"
                checked="@Model.Checked"
@@ -13,7 +12,7 @@
         @if (Model.Required)
         {
             <input type="hidden"
-                   name="Input.ScopesConsented"
+                   name="ScopesConsented"
                    value="@Model.Value" />
         }
         <strong>@Model.DisplayName</strong>

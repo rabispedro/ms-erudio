@@ -22,6 +22,7 @@ public class ProductController : ControllerBase
 
 	[HttpGet]
 	[Authorize]
+	[ProducesResponseType(401)]
 	public async Task<ActionResult<IEnumerable<ProductVO>>> FindAll()
 	{
 		return Ok(await _repository.FindAll());
@@ -42,6 +43,7 @@ public class ProductController : ControllerBase
 	[HttpPost]
 	[Authorize]
 	[ProducesResponseType(400)]
+	[ProducesResponseType(401)]
 	public async Task<ActionResult<ProductVO>> Create([FromBody] ProductVO productVo)
 	{
 		if (productVo == null)
@@ -53,6 +55,7 @@ public class ProductController : ControllerBase
 	[HttpPut]
 	[Authorize]
 	[ProducesResponseType(400)]
+	[ProducesResponseType(401)]
 	public async Task<ActionResult<ProductVO>> Update([FromBody] ProductVO productVo)
 	{
 		if (productVo == null)
@@ -64,6 +67,8 @@ public class ProductController : ControllerBase
 	[HttpDelete("{id}")]
 	[Authorize(Roles = Role.Admin)]
 	[ProducesResponseType(400)]
+	[ProducesResponseType(401)]
+	[ProducesResponseType(403)]
 	public async Task<ActionResult> Delete(long id)
 	{
 		var isSucceded = await _repository.Delete(id);

@@ -1,5 +1,4 @@
-@page
-@model ms_erudio.Pages.Logout.Index
+﻿@model LogoutViewModel
 
 <div class="logout-page">
     <div class="lead">
@@ -7,9 +6,8 @@
         <p>Would you like to logout of IdentityServer?</p>
     </div>
 
-    <form asp-page="/Account/Logout/Index">
+    <form asp-action="Logout">
         <input type="hidden" name="logoutId" value="@Model.LogoutId"  />
-        
         <div class="form-group">
             <button class="btn btn-primary">Yes</button>
         </div>

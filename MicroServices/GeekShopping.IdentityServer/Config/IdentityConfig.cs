@@ -28,14 +28,14 @@ public static class IdentityConfig
 		new()
 		{
 			ClientId = "client",
-			ClientSecrets = { new Secret("IDontRecommendUseThisSecretMethod".Sha512()) },
+			ClientSecrets = { new Secret("IDontRecommendUseThisSecretMethod".Sha256()) },
 			AllowedGrantTypes = GrantTypes.ClientCredentials,
 			AllowedScopes = { "read", "write", "profile" }
 		},
 		new()
 		{
 			ClientId = "geek_shopping",
-			ClientSecrets = { new Secret("IDontRecommendUseThisSecretMethod".Sha512()) },
+			ClientSecrets = { new Secret("IDontRecommendUseThisSecretMethod".Sha256()) },
 			AllowedGrantTypes = GrantTypes.Code,
 			RedirectUris = { "https://localhost:7030/signin-oidc" },
 			PostLogoutRedirectUris = { "https://localhost:7030/signout-callback-oidc" },

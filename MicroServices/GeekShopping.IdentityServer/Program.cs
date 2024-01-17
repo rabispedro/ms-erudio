@@ -9,7 +9,6 @@ using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddControllersWithViews();
 
 builder.Services.AddDbContext<MySqlContext>(options => options.UseMySql(
 	builder.Configuration["MySqlConnection:MySqlConnectionString"],
@@ -36,6 +35,8 @@ var builderIdentityService = builder.Services.AddIdentityServer(options =>
 builder.Services.AddScoped<IDbInitializer, DbInitializer>();
 
 builderIdentityService.AddDeveloperSigningCredential();
+
+builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
 var initializer = app.Services.CreateScope().ServiceProvider.GetService<IDbInitializer>();
