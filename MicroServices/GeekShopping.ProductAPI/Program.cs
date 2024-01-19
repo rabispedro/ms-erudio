@@ -8,14 +8,13 @@ using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-
 builder.Services.AddControllers();
 
-builder.Services.AddAuthentication("Bearer")
+builder.Services
+	.AddAuthentication("Bearer")
 	.AddJwtBearer("Bearer", options =>
 	{
-		options.Authority = "https://localhost:7161";
+		options.Authority = "https://localhost:7161/";
 		options.TokenValidationParameters = new TokenValidationParameters
 		{
 			ValidateAudience = false
@@ -64,9 +63,10 @@ builder.Services.AddSwaggerGen(options =>
 	});
 });
 
-builder.Services.AddDbContext<MySqlContext>(options => options.UseMySql(
-	builder.Configuration["MySqlConnection:MySqlConnectionString"],
-	new MySqlServerVersion(new Version(8, 2, 0))
+builder.Services.AddDbContext<MySqlContext>(options =>
+	options.UseMySql(
+		builder.Configuration["MySqlConnection:MySqlConnectionString"],
+		new MySqlServerVersion(new Version(8, 2, 0))
 ));
 
 builder.Services.AddSingleton(MappingConfig.RegisterMaps().CreateMapper());
@@ -84,7 +84,9 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
 app.UseAuthentication();
+
 app.UseAuthorization();
 
 app.MapControllers();
