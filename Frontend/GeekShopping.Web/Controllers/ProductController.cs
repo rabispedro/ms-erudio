@@ -1,6 +1,7 @@
 using GeekShopping.Web.Models;
 using GeekShopping.Web.Services.Interfaces;
 using GeekShopping.Web.Utils;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -18,7 +19,8 @@ public class ProductController : Controller
 	[Authorize]
 	public async Task<IActionResult> Index()
 	{
-		return View(await _productService.FindAll());
+		var token = await HttpContext.GetTokenAsync("access_token");
+		return View(await _productService.FindAll(token));
 	}
 
 	public async Task<IActionResult> Create()
@@ -32,8 +34,9 @@ public class ProductController : Controller
 	{
 		if (!ModelState.IsValid)
 			return View(model);
-		
-		var response = await _productService.Create(model);
+
+		var token = await HttpContext.GetTokenAsync("access_token");
+		var response = await _productService.Create(model, token);
 		if (response == null)
 			return View(model);
 
@@ -42,7 +45,8 @@ public class ProductController : Controller
 
 	public async Task<IActionResult> Update(long id)
 	{
-		var model = await _productService.FindById(id);
+		var token = await HttpContext.GetTokenAsync("access_token");
+		var model = await _productService.FindById(id, token);
 		if (model == null)
 			return NotFound();
 		
@@ -56,7 +60,8 @@ public class ProductController : Controller
 		if (!ModelState.IsValid)
 			return View(model);
 
-		var response = await _productService.Update(model);
+		var token = await HttpContext.GetTokenAsync("access_token");
+		var response = await _productService.Update(model, token);
 		if (response == null)
 			return View(model);
 		
@@ -66,7 +71,8 @@ public class ProductController : Controller
 	[Authorize]
 	public async Task<IActionResult> Delete(long id)
 	{
-		var model = await _productService.FindById(id);
+		var token = await HttpContext.GetTokenAsync("access_token");
+		var model = await _productService.FindById(id, token);
 		if (model == null)
 			return NotFound();
 
@@ -77,7 +83,8 @@ public class ProductController : Controller
 	[Authorize(Roles = Role.Admin)]
 	public async Task<IActionResult> Delete(ProductModel model)
 	{
-		var isSucceded = await _productService.Delete(model.Id);
+		var token = await HttpContext.GetTokenAsync("access_token");
+		var isSucceded = await _productService.Delete(model.Id, token);
 		if (!isSucceded)
 			return View(model);
 

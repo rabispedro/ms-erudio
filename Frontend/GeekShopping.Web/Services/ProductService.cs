@@ -1,3 +1,4 @@
+using System.Net.Http.Headers;
 using GeekShopping.Web.Models;
 using GeekShopping.Web.Services.Interfaces;
 using GeekShopping.Web.Utils;
@@ -17,8 +18,9 @@ public class ProductService : IProductService
 		_httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
 	}
 
-	public async Task<ProductModel> Create(ProductModel model)
+	public async Task<ProductModel> Create(ProductModel model, string token)
 	{
+		_httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 		var response = await _httpClient.PostAsJson(BasePath, model);
 		if (!response.IsSuccessStatusCode)
 			throw new Exception("Something went wrong when calling API");
@@ -26,8 +28,9 @@ public class ProductService : IProductService
 		return await response.ReadContentAs<ProductModel>();
 	}
 
-	public async Task<bool> Delete(long id)
+	public async Task<bool> Delete(long id, string token)
 	{
+		_httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 		var response = await _httpClient.DeleteAsync($"{BasePath}/{id}");
 		_logger.LogInformation("Response: {response}", response);
 		_logger.LogInformation("IsSuccessStatusCode: {response}", response.IsSuccessStatusCode);
@@ -40,20 +43,23 @@ public class ProductService : IProductService
 		return result;
 	}
 
-	public async Task<IEnumerable<ProductModel>> FindAll()
+	public async Task<IEnumerable<ProductModel>> FindAll(string token)
 	{
+		_httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 		var response = await _httpClient.GetAsync(BasePath);
 		return await response.ReadContentAs<List<ProductModel>>();
 	}
 
-	public async Task<ProductModel> FindById(long id)
+	public async Task<ProductModel> FindById(long id, string token)
 	{
+		_httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 		var response = await _httpClient.GetAsync($"{BasePath}/{id}");
 		return await response.ReadContentAs<ProductModel>();
 	}
 
-	public async Task<ProductModel> Update(ProductModel model)
+	public async Task<ProductModel> Update(ProductModel model, string token)
 	{
+		_httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 		var response = await _httpClient.PutAsJson(BasePath, model);
 		if (!response.IsSuccessStatusCode)
 			throw new Exception("Something went wrong when calling API");
