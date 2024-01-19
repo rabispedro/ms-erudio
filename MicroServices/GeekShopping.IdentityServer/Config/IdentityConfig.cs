@@ -39,7 +39,7 @@ public static class IdentityConfig
 			AllowedGrantTypes = GrantTypes.Code,
 			RedirectUris = { "https://localhost:7030/signin-oidc" },
 			PostLogoutRedirectUris = { "https://localhost:7030/signout-callback-oidc" },
-			AllowedScopes = new List<string>
+			AllowedScopes =
 			{
 				IdentityServerConstants.StandardScopes.OpenId,
 				IdentityServerConstants.StandardScopes.Profile,

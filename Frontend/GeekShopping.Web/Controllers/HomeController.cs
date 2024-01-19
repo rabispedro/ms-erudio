@@ -29,6 +29,7 @@ public class HomeController : Controller
 	[Authorize]
 	public async Task<IActionResult> Login()
 	{
+		Console.WriteLine("Redirecionamento do Login no DUENDE");
 		// var accessToken = await HttpContext.GetTokenAsync("access_token");
 		return RedirectToAction(nameof(Index));
 	}
