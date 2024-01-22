@@ -1,3 +1,4 @@
+using System.Security.Cryptography.X509Certificates;
 using GeekShopping.Web.Services;
 using GeekShopping.Web.Services.Interfaces;
 using Microsoft.AspNetCore.Authentication;
@@ -30,7 +31,7 @@ builder.Services.AddAuthentication(options =>
 		options.TokenValidationParameters.RoleClaimType = "role";
 		options.Scope.Add("geek_shopping");
 		options.SaveTokens = true;
-		options.RequireHttpsMetadata = true;
+		options.RequireHttpsMetadata = false;
 	});
 
 IdentityModelEventSource.ShowPII = true;
@@ -43,7 +44,7 @@ if (!app.Environment.IsDevelopment())
 	app.UseExceptionHandler("/Home/Error");
 }
 
-app.UseHttpsRedirection();
+// app.UseHttpsRedirection();
 
 app.UseStaticFiles();
 

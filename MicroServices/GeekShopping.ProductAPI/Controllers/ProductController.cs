@@ -21,7 +21,6 @@ public class ProductController : ControllerBase
 	}
 
 	[HttpGet]
-	[Authorize]
 	[ProducesResponseType(401)]
 	public async Task<ActionResult<IEnumerable<ProductVO>>> FindAll()
 	{

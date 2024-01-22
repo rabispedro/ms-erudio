@@ -37,8 +37,16 @@ public static class IdentityConfig
 			ClientId = "geek_shopping",
 			ClientSecrets = { new Secret("IDontRecommendUseThisSecretMethod".Sha256()) },
 			AllowedGrantTypes = GrantTypes.Code,
-			RedirectUris = { "https://localhost:7030/signin-oidc" },
-			PostLogoutRedirectUris = { "https://localhost:7030/signout-callback-oidc" },
+			RedirectUris =
+			{
+				"http://localhost:5197/signin-oidc",
+				"https://localhost:7030/signin-oidc"
+			},
+			PostLogoutRedirectUris =
+			{
+				"http://localhost:5197/signout-callback-oidc",
+				"https://localhost:7030/signout-callback-oidc"
+			},
 			AllowedScopes =
 			{
 				IdentityServerConstants.StandardScopes.OpenId,

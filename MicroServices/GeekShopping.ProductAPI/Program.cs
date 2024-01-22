@@ -14,7 +14,8 @@ builder.Services
 	.AddAuthentication("Bearer")
 	.AddJwtBearer("Bearer", options =>
 	{
-		options.Authority = "https://localhost:7161/";
+		options.Authority = "http://localhost:5021/";
+		options.RequireHttpsMetadata = false;
 		options.TokenValidationParameters = new TokenValidationParameters
 		{
 			ValidateAudience = false
@@ -42,7 +43,7 @@ builder.Services.AddSwaggerGen(options =>
 		Name = "Authorization",
 		In = ParameterLocation.Header,
 		Type = SecuritySchemeType.ApiKey,
-		Scheme = "Bearer"
+		Scheme = "Bearer",
 	});
 	options.AddSecurityRequirement(new OpenApiSecurityRequirement
 	{
@@ -52,7 +53,7 @@ builder.Services.AddSwaggerGen(options =>
 				Reference = new OpenApiReference
 				{
 					Type = ReferenceType.SecurityScheme,
-					Id = "Bearer"
+					Id = "Bearer",
 				},
 				Scheme = "oauth2",
 				Name = "Bearer",
@@ -83,7 +84,7 @@ if (app.Environment.IsDevelopment())
 	app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+// app.UseHttpsRedirection();
 
 app.UseAuthentication();
 
