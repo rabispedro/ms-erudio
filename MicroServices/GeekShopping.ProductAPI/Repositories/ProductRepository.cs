@@ -15,8 +15,8 @@ public class ProductRepository : IProductRepository
 
 	public ProductRepository(MySqlContext context, IMapper mapper)
 	{
-		_context = context;
-		_mapper = mapper;
+		_context = context ?? throw new ArgumentNullException(nameof(context));
+		_mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
 	}
 
 	public async Task<ProductVO> Create(ProductVO productVO)

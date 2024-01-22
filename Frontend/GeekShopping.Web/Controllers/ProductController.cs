@@ -29,7 +29,7 @@ public class ProductController : Controller
 
 	[HttpPost]
 	[Authorize]
-	public async Task<IActionResult> Create(ProductModel model)
+	public async Task<IActionResult> Create(ProductViewModel model)
 	{
 		if (!ModelState.IsValid)
 			return View(model);
@@ -54,7 +54,7 @@ public class ProductController : Controller
 
 	[HttpPost]
 	[Authorize]
-	public async Task<IActionResult> Update(ProductModel model)
+	public async Task<IActionResult> Update(ProductViewModel model)
 	{
 		if (!ModelState.IsValid)
 			return View(model);
@@ -80,7 +80,7 @@ public class ProductController : Controller
 
 	[HttpPost]
 	[Authorize(Roles = Role.Admin)]
-	public async Task<IActionResult> Delete(ProductModel model)
+	public async Task<IActionResult> Delete(ProductViewModel model)
 	{
 		var token = await HttpContext.GetTokenAsync("access_token");
 		var isSucceded = await _productService.Delete(model.Id, token);
