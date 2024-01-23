@@ -1,4 +1,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics.CodeAnalysis;
+using System.Text;
+using AutoMapper.Configuration.Annotations;
 using GeekShopping.CartAPI.Models.Base;
 
 namespace GeekShopping.CartAPI.Models;
@@ -10,7 +13,6 @@ public class CartDetail : BaseEntity
 
 	[ForeignKey("CartHeaderId")]
 	public virtual CartHeader CartHeader { get; set; }
-
 	public long ProductId { get; set; }
 
 	[ForeignKey("ProductId")]

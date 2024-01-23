@@ -40,7 +40,7 @@ public class CartRepository : ICartRepository
 
 	public async Task<CartVO> FindByUserId(string id)
 	{
-		Cart cart = new Cart
+		var cart = new Cart
 		{
 			CartHeader = await _context.CartHeaders.FirstOrDefaultAsync(item => item.UserId == id),
 		};

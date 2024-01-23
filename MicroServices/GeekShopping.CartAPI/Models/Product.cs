@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text;
 using GeekShopping.CartAPI.Models.Base;
 
 namespace GeekShopping.CartAPI.Models;
@@ -10,7 +11,7 @@ public class Product
 	[Key, DatabaseGenerated(DatabaseGeneratedOption.None)]
 	[Column("id")]
 	public long Id { get; set; }
-	
+
 	[Column("name")]
 	[Required]
 	[StringLength(150)]
@@ -23,13 +24,13 @@ public class Product
 
 	[Column("description")]
 	[StringLength(512)]
-	public string? Description { get; set; }
+	public string Description { get; set; }
 
 	[Column("category_name")]
 	[StringLength(64)]
-	public string? CategoryName { get; set; }
+	public string CategoryName { get; set; }
 
 	[Column("image_url")]
 	[StringLength(300)]
-	public string? ImageUrl { get; set; }
+	public string ImageUrl { get; set; }
 }

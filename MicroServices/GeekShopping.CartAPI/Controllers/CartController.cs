@@ -28,13 +28,19 @@ public class CartController : ControllerBase
 	[HttpPost("add-cart")]
 	public async Task<ActionResult<CartVO>> Add([FromBody] CartVO cartVo)
 	{
-		if (cartVo == null)
+		var cart = await _cartRepository.SaveOrUpdate(cartVo);
+		if (cart == null)
 			return BadRequest();
 		
-		return Ok(await _cartRepository.SaveOrUpdate(cartVo));
+		return Ok(cart);
+
+		// if (cartVo == null)
+		// 	return BadRequest();
+
+		// return Ok(await _cartRepository.SaveOrUpdate(cartVo));
 	}
 
-	[HttpPut("update-cart/")]
+	[HttpPut("update-cart")]
 	public async Task<ActionResult<CartVO>> Update([FromBody] CartVO cartVo)
 	{
 		if (cartVo == null)

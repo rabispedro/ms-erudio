@@ -23,7 +23,7 @@ public class ProductService : IProductService
 		_httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 		var response = await _httpClient.PostAsJson(BasePath, model);
 		if (!response.IsSuccessStatusCode)
-			throw new Exception("Something went wrong when calling API");
+			throw new Exception("Something went wrong when calling ProductAPI");
 
 		return await response.ReadContentAs<ProductViewModel>();
 	}
@@ -32,15 +32,10 @@ public class ProductService : IProductService
 	{
 		_httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 		var response = await _httpClient.DeleteAsync($"{BasePath}/{id}");
-		_logger.LogInformation("Response: {response}", response);
-		_logger.LogInformation("IsSuccessStatusCode: {response}", response.IsSuccessStatusCode);
 		if (!response.IsSuccessStatusCode)
-			throw new Exception("Something went wrong when calling API");
+			throw new Exception("Something went wrong when calling ProductAPI");
 
-		bool result = await response.ReadContentAs<bool>();
-		_logger.LogInformation("Result: {result}", result);
-
-		return result;
+		return await response.ReadContentAs<bool>();
 	}
 
 	public async Task<IEnumerable<ProductViewModel>> FindAll(string token)
@@ -62,7 +57,7 @@ public class ProductService : IProductService
 		_httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 		var response = await _httpClient.PutAsJson(BasePath, model);
 		if (!response.IsSuccessStatusCode)
-			throw new Exception("Something went wrong when calling API");
+			throw new Exception("Something went wrong when calling ProductAPI");
 
 		return await response.ReadContentAs<ProductViewModel>();
 	}

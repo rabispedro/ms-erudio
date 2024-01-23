@@ -7,8 +7,10 @@ using Microsoft.IdentityModel.Logging;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddHttpClient<IProductService, ProductService>(client =>
-	client.BaseAddress = new Uri(builder.Configuration["MicroServicesUrl:ProductAPI"])
-);
+	client.BaseAddress = new Uri(builder.Configuration["MicroServicesUrl:ProductAPI"]));
+
+builder.Services.AddHttpClient<ICartService, CartService>(client =>
+	client.BaseAddress = new Uri(builder.Configuration["MicroServicesUrl:CartAPI"]));
 
 builder.Services.AddControllersWithViews();
 
@@ -22,19 +24,19 @@ builder.Services.AddAuthentication(options =>
 	{
 		options.Authority = $"{builder.Configuration["MicroServicesUrl:IdentityServer"]}/";
 		options.GetClaimsFromUserInfoEndpoint = true;
-		options.ClientId = "geek_shopping";
+		options.ClientId = "geek_shopping_web";
 		options.ClientSecret = "IDontRecommendUseThisSecretMethod";
 		options.ResponseType = "code";
 		options.ClaimActions.MapJsonKey("role", "role", "role");
 		options.ClaimActions.MapJsonKey("sub", "sub", "sub");
 		options.TokenValidationParameters.NameClaimType = "name";
 		options.TokenValidationParameters.RoleClaimType = "role";
-		options.Scope.Add("geek_shopping");
+		options.Scope.Add("geek_shopping_web");
 		options.SaveTokens = true;
 		options.RequireHttpsMetadata = false;
 	});
 
-IdentityModelEventSource.ShowPII = true;
+// IdentityModelEventSource.ShowPII = true;
 
 var app = builder.Build();
 

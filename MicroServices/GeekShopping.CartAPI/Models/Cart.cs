@@ -1,3 +1,5 @@
+using System.Text;
+
 namespace GeekShopping.CartAPI.Models;
 
 public class Cart

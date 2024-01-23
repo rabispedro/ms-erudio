@@ -1,4 +1,4 @@
-using GeekShopping.CartAPI.Config;
+using GeekShopping.CartAPI.Configs;
 using GeekShopping.CartAPI.Models.Context;
 using GeekShopping.CartAPI.Repositories;
 using GeekShopping.CartAPI.Repositories.Interface;
@@ -28,7 +28,7 @@ builder.Services.AddAuthorization(options =>
 	options.AddPolicy("ApiScope", policy =>
 	{
 		policy.RequireAuthenticatedUser();
-		policy.RequireClaim("scope", "geek_shopping");
+		policy.RequireClaim("scope", "geek_shopping_web");
 	});
 });
 
