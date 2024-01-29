@@ -1,3 +1,4 @@
+using System.Net;
 using System.Net.Http.Headers;
 using System.Threading.Tasks.Dataflow;
 using GeekShopping.Web.Models;
@@ -38,12 +39,17 @@ public class CartService : ICartService
 		return await response.ReadContentAs<bool>();
 	}
 
-	public async Task<CartHeaderViewModel> Checkout(CartHeaderViewModel model, string token)
+	public async Task<object> Checkout(CartHeaderViewModel model, string token)
 	{
 		_httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 		var response = await _httpClient.PostAsJson($"{BasePath}/checkout", model);
 		if (!response.IsSuccessStatusCode)
-			throw new Exception("Something went wrong when calling Cart API");
+		{
+			if (response.StatusCode != HttpStatusCode.PreconditionFailed)
+				throw new Exception("Something went wrong when calling Cart API");
+
+			return "Coupon price has changed, please confirm!";
+		}
 
 		return await response.ReadContentAs<CartHeaderViewModel>();
 	}

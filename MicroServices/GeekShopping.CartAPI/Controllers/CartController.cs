@@ -3,6 +3,7 @@ using GeekShopping.CartAPI.Data.ValueObjects;
 using GeekShopping.CartAPI.Messages;
 using GeekShopping.CartAPI.RabbitMqSender.Interfaces;
 using GeekShopping.CartAPI.Repositories.Interface;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GeekShopping.CartAPI.Controllers;
@@ -12,11 +13,16 @@ namespace GeekShopping.CartAPI.Controllers;
 public class CartController : ControllerBase
 {
 	private readonly ICartRepository _cartRepository;
+	private readonly ICouponRepository _couponRepository;
 	private readonly IRabbitMqMessageSender _rabbitMqMessageSender;
 
-	public CartController(ICartRepository cartRepository, IRabbitMqMessageSender rabbitMqMessageSender)
+	public CartController(
+		ICartRepository cartRepository,
+		ICouponRepository couponRepository,
+		IRabbitMqMessageSender rabbitMqMessageSender)
 	{
 		_cartRepository = cartRepository ?? throw new ArgumentNullException(nameof(cartRepository));
+		_couponRepository = couponRepository ?? throw new ArgumentNullException(nameof(couponRepository));
 		_rabbitMqMessageSender = rabbitMqMessageSender ?? throw new ArgumentNullException(nameof(rabbitMqMessageSender));
 	}
 
@@ -88,6 +94,15 @@ public class CartController : ControllerBase
 		var cart = await _cartRepository.FindByUserId(checkoutHeaderVo.UserId);
 		if (cart == null)
 			return NotFound();
+
+		if (!string.IsNullOrWhiteSpace(checkoutHeaderVo.CouponCode))
+		{
+			string token = await HttpContext.GetTokenAsync("access_token");
+			var coupon = await _couponRepository.FindByCode(checkoutHeaderVo.CouponCode, token);
+
+			if (checkoutHeaderVo.DiscountAmount != coupon.DiscountAmount)
+				return StatusCode(412);
+		}
 
 		checkoutHeaderVo.CartDetails = cart.CartDetails;
 		checkoutHeaderVo.DateTime = DateTime.UtcNow;

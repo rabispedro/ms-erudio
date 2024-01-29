@@ -111,6 +111,12 @@ public class CartController : Controller
 		if (response == null)
 			return View(model);
 
+		if (response.GetType() == typeof(string))
+		{
+			TempData["Error"] = response;
+			return RedirectToAction(nameof(Checkout));
+		}
+
 		return RedirectToAction(nameof(Confirmation));
 	}
 

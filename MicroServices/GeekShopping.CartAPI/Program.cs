@@ -76,7 +76,14 @@ builder.Services.AddSingleton(MappingConfig.RegisterMaps().CreateMapper());
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 builder.Services.AddScoped<ICartRepository, CartRepository>();
+builder.Services.AddScoped<ICouponRepository, CouponRepository>();
+
 builder.Services.AddSingleton<IRabbitMqMessageSender, RabbitMqMessageSender>();
+
+builder.Services.AddHttpClient<ICouponRepository, CouponRepository>(config =>
+{
+	config.BaseAddress = new Uri(builder.Configuration["MicroServicesUrl:CouponAPI"]);
+});
 
 // builder.Services.AddRouting(config =>
 // {
