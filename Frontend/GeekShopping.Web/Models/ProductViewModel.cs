@@ -30,18 +30,4 @@ public class ProductViewModel
 
 		return $"{Description[..352]}...";
 	}
-
-	public override string ToString()
-	{
-		var result = new StringBuilder();
-		result.Append($"[ Id: {Id},\n");
-		result.Append($"Name: {Name},\n");
-		result.Append($"Price: {Price},\n");
-		result.Append($"Description: {Description},\n");
-		result.Append($"CategoryName: {CategoryName},\n");
-		result.Append($"Count: {Count},\n");
-		result.Append($"ImageUrl: {ImageUrl} ]\n");
-
-		return result.ToString();
-	}
 }

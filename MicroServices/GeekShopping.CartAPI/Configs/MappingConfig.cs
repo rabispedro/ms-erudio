@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace GeekShopping.CartAPI.Configs;
 
-public class MappingConfig
+public static class MappingConfig
 {
 	public static MapperConfiguration RegisterMaps()
 	{

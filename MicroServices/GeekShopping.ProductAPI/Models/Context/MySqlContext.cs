@@ -14,7 +14,7 @@ public class MySqlContext : DbContext
 	{
 		base.OnModelCreating(modelBuilder);
 		modelBuilder.Entity<Product>().HasData(
-			new Product
+			new()
 			{
 				Id = 2,
 				Name = "Camiseta No Internet",
@@ -23,7 +23,7 @@ public class MySqlContext : DbContext
 				ImageUrl = "https://github.com/leandrocgsi/erudio-microservices-dotnet6/blob/main/ShoppingImages/2_no_internet.jpg?raw=true",
 				CategoryName = "T-shirt"
 			},
-			new Product
+			new()
 			{
 				Id = 3,
 				Name = "Capacete Darth Vader Star Wars Black Series",
@@ -32,7 +32,7 @@ public class MySqlContext : DbContext
 				ImageUrl = "https://github.com/leandrocgsi/erudio-microservices-dotnet6/blob/main/ShoppingImages/3_vader.jpg?raw=true",
 				CategoryName = "Action Figure"
 			},
-			new Product
+			new()
 			{
 				Id = 4,
 				Name = "Star Wars The Black Series Hasbro - Stormtrooper Imperial",
@@ -41,7 +41,7 @@ public class MySqlContext : DbContext
 				ImageUrl = "https://github.com/leandrocgsi/erudio-microservices-dotnet6/blob/main/ShoppingImages/4_storm_tropper.jpg?raw=true",
 				CategoryName = "Action Figure"
 			},
-			new Product
+			new()
 			{
 				Id = 5,
 				Name = "Camiseta Gamer",
@@ -50,7 +50,7 @@ public class MySqlContext : DbContext
 				ImageUrl = "https://github.com/leandrocgsi/erudio-microservices-dotnet6/blob/main/ShoppingImages/5_100_gamer.jpg?raw=true",
 				CategoryName = "T-shirt"
 			},
-			new Product
+			new()
 			{
 				Id = 6,
 				Name = "Camiseta SpaceX",
@@ -59,7 +59,7 @@ public class MySqlContext : DbContext
 				ImageUrl = "https://github.com/leandrocgsi/erudio-microservices-dotnet6/blob/main/ShoppingImages/6_spacex.jpg?raw=true",
 				CategoryName = "T-shirt"
 			},
-			new Product
+			new()
 			{
 				Id = 7,
 				Name = "Camiseta Feminina Coffee Benefits",
@@ -68,7 +68,7 @@ public class MySqlContext : DbContext
 				ImageUrl = "https://github.com/leandrocgsi/erudio-microservices-dotnet6/blob/main/ShoppingImages/7_coffee.jpg?raw=true",
 				CategoryName = "T-shirt"
 			},
-			new Product
+			new()
 			{
 				Id = 8,
 				Name = "Moletom Com Capuz Cobra Kai",
@@ -77,7 +77,7 @@ public class MySqlContext : DbContext
 				ImageUrl = "https://github.com/leandrocgsi/erudio-microservices-dotnet6/blob/main/ShoppingImages/8_moletom_cobra_kay.jpg?raw=true",
 				CategoryName = "Sweatshirt"
 			},
-			new Product
+			new()
 			{
 				Id = 9,
 				Name = "Livro Star Talk – Neil DeGrasse Tyson",
@@ -86,7 +86,7 @@ public class MySqlContext : DbContext
 				ImageUrl = "https://github.com/leandrocgsi/erudio-microservices-dotnet6/blob/main/ShoppingImages/9_neil.jpg?raw=true",
 				CategoryName = "Book"
 			},
-			new Product
+			new()
 			{
 				Id = 10,
 				Name = "Star Wars Mission Fleet Han Solo Nave Milennium Falcon",
@@ -95,7 +95,7 @@ public class MySqlContext : DbContext
 				ImageUrl = "https://github.com/leandrocgsi/erudio-microservices-dotnet6/blob/main/ShoppingImages/10_milennium_falcon.jpg?raw=true",
 				CategoryName = "Action Figure"
 			},
-			new Product
+			new()
 			{
 				Id = 11,
 				Name = "Camiseta Elon Musk Spacex Marte Occupy Mars",
@@ -104,7 +104,7 @@ public class MySqlContext : DbContext
 				ImageUrl = "https://github.com/leandrocgsi/erudio-microservices-dotnet6/blob/main/ShoppingImages/11_mars.jpg?raw=true",
 				CategoryName = "T-shirt"
 			},
-			new Product
+			new()
 			{
 				Id = 12,
 				Name = "Camiseta GNU Linux Programador Masculina",
@@ -113,7 +113,7 @@ public class MySqlContext : DbContext
 				ImageUrl = "https://github.com/leandrocgsi/erudio-microservices-dotnet6/blob/main/ShoppingImages/12_gnu_linux.jpg?raw=true",
 				CategoryName = "T-shirt"
 			},
-			new Product
+			new()
 			{
 				Id = 13,
 				Name = "Camiseta Goku Fases",

@@ -12,6 +12,11 @@ builder.Services.AddHttpClient<IProductService, ProductService>(client =>
 builder.Services.AddHttpClient<ICartService, CartService>(client =>
 	client.BaseAddress = new Uri(builder.Configuration["MicroServicesUrl:CartAPI"]));
 
+builder.Services.AddHttpClient<ICouponService, CouponService>(client =>
+{
+	client.BaseAddress = new Uri(builder.Configuration["MicroServicesUrl:CouponAPI"]);
+});
+
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddAuthentication(options =>

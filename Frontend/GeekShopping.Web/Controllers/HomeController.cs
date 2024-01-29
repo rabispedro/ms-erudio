@@ -64,7 +64,6 @@ public class HomeController : Controller
 		};
 
 		cart.CartDetails = cartDetails;
-		Console.WriteLine($"UserId: {cart.CartHeader.UserId}");
 
 		var response = await _cartService.AddItem(cart, token);
 		if (response == null)

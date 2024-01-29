@@ -19,16 +19,6 @@ public class CartService : ICartService
 
 	public async Task<CartViewModel> AddItem(CartViewModel model, string token)
 	{
-		// _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-		Console.WriteLine($"Model: {model}\n\nToken: {token}");
-		// var response = await _httpClient.PostAsJson($"{BasePath}/add-cart", model);
-		// // var response = await _httpClient.PostAsJson(BasePath, model);
-
-		// if (!response.IsSuccessStatusCode)
-		// 	throw new Exception("Something went wrong when calling CartAPI");
-
-		// return await response.ReadContentAs<CartViewModel>();
-
 		_httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 		var response = await _httpClient.PostAsJson($"{BasePath}/add-cart", model);
 		if (response.IsSuccessStatusCode)
@@ -54,7 +44,6 @@ public class CartService : ICartService
 	public async Task<CartViewModel> FindByUserId(string id, string token)
 	{
 		_httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-		Console.WriteLine($"Id: {id}");
 		var response = await _httpClient.GetAsync($"{BasePath}/find-cart/{id}");
 		return await response.ReadContentAs<CartViewModel>();
 	}
@@ -67,7 +56,6 @@ public class CartService : ICartService
 	public async Task<bool> RemoveItem(long cartId, string token)
 	{
 		_httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-		Console.WriteLine($"CartId: {cartId}");
 		var response = await _httpClient.DeleteAsync($"{BasePath}/remove-cart/{cartId}");
 		if (!response.IsSuccessStatusCode)
 			throw new Exception("Something went wrong when calling CartAPI");
@@ -78,11 +66,10 @@ public class CartService : ICartService
 	public async Task<CartViewModel> Update(CartViewModel model, string token)
 	{
 		_httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-		Console.WriteLine($"Model: {model}");
 		var response = await _httpClient.PutAsJson($"{BasePath}/update-cart/", model);
 		if (!response.IsSuccessStatusCode)
 			throw new Exception("Something went wrong when calling CartAPI");
 
-		return (await response.ReadContentAs<CartViewModel>());
+		return await response.ReadContentAs<CartViewModel>();
 	}
 }
