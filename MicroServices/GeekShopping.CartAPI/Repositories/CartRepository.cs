@@ -18,9 +18,16 @@ public class CartRepository : ICartRepository
 		_mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
 	}
 
-	public Task<bool> ApplyCoupon(string userId, string couponCode)
+	public async Task<bool> ApplyCoupon(string userId, string couponCode)
 	{
-		throw new NotImplementedException();
+		var cartHeader = await _context.CartHeaders.FirstOrDefaultAsync(item => item.UserId == userId);
+		if (cartHeader == null)
+			return false;
+
+		cartHeader.CouponCode = couponCode;
+		_context.CartHeaders.Update(cartHeader);
+		await _context.SaveChangesAsync();
+		return true;
 	}
 
 	public async Task<bool> Clear(string userId)
@@ -76,9 +83,16 @@ public class CartRepository : ICartRepository
 		}
 	}
 
-	public Task<bool> RemoveCoupon(string userId)
+	public async Task<bool> RemoveCoupon(string userId)
 	{
-		throw new NotImplementedException();
+		var cartHeader = await _context.CartHeaders.FirstOrDefaultAsync(item => item.UserId == userId);
+		if (cartHeader == null)
+			return false;
+
+		cartHeader.CouponCode = null;
+		_context.CartHeaders.Update(cartHeader);
+		await _context.SaveChangesAsync();
+		return true;
 	}
 
 	public async Task<CartVO> SaveOrUpdate(CartVO cartVo)

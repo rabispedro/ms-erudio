@@ -75,6 +75,10 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 builder.Services.AddScoped<ICartRepository, CartRepository>();
 
+// builder.Services.AddRouting(config =>
+// {
+// 	config.LowercaseUrls = true;
+// });
 
 var app = builder.Build();
 

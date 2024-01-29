@@ -8,7 +8,7 @@ public interface ICartService
 	Task<CartViewModel> AddItem(CartViewModel model, string token);
 	Task<CartViewModel> Update(CartViewModel model, string token);
 	Task<bool> RemoveItem(long cartId, string token);
-	Task<bool> ApplyCoupon(CartViewModel model, string couponCode, string token);
+	Task<bool> ApplyCoupon(CartViewModel model, string token);
 	Task<bool> RemoveCoupon(string userId, string token);
 	Task<bool> Clear(string userId, string token);
 	Task<CartViewModel> Checkout(CartHeaderViewModel model, string token);

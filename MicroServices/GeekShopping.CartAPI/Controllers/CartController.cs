@@ -33,11 +33,6 @@ public class CartController : ControllerBase
 			return BadRequest();
 		
 		return Ok(cart);
-
-		// if (cartVo == null)
-		// 	return BadRequest();
-
-		// return Ok(await _cartRepository.SaveOrUpdate(cartVo));
 	}
 
 	[HttpPut("update-cart")]
@@ -57,5 +52,25 @@ public class CartController : ControllerBase
 			return BadRequest();
 
 		return Ok(isSucceded);
+	}
+
+	[HttpPost("apply-coupon/")]
+	public async Task<ActionResult<bool>> ApplyCoupon([FromBody] CartVO cartVo)
+	{
+		var status = await _cartRepository.ApplyCoupon(cartVo.CartHeader.UserId, cartVo.CartHeader.CouponCode);
+		if (!status)
+			return NotFound();
+
+		return Ok(status);
+	}
+
+	[HttpDelete("remove-coupon/{userId}")]
+	public async Task<ActionResult<bool>> RemoveCoupon(string userId)
+	{
+		var status = await _cartRepository.RemoveCoupon(userId);
+		if (!status)
+			return NotFound();
+
+		return Ok(status);
 	}
 }
