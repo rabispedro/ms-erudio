@@ -7,10 +7,10 @@ namespace GeekShopping.CouponAPI.Models;
 [Table("tbl_coupon")]
 public class Coupon : BaseEntity
 {
-	[Column("code")]
+	[Column("coupon_code")]
 	[Required]
-	[StringLength(150)]
-	public string Code { get; set; }
+	[StringLength(30)]
+	public string CouponCode { get; set; }
 
 	[Column("discount_amount")]
 	[Required]

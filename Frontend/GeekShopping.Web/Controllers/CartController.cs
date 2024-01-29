@@ -55,7 +55,7 @@ public class CartController : Controller
 			if (!string.IsNullOrWhiteSpace(response.CartHeader.CouponCode))
 			{
 				var coupon = await _couponService.FindByCode(response.CartHeader.CouponCode, token);
-				if (coupon?.Code != null)
+				if (coupon?.CouponCode != null)
 					response.CartHeader.DiscountAmount = coupon.DiscountAmount;
 			}
 
@@ -97,10 +97,26 @@ public class CartController : Controller
 	}
 
 	[HttpGet]
-	// [Authorize]
-	// [ActionName("Checkout")]
 	public async Task<IActionResult> Checkout()
 	{
 		return View(await FindByUserId());
+	}
+
+	[HttpPost]
+	public async Task<IActionResult> Checkout(CartViewModel model)
+	{
+		var token = await HttpContext.GetTokenAsync("access_token");
+
+		var response = await _cartService.Checkout(model.CartHeader, token);
+		if (response == null)
+			return View(model);
+
+		return RedirectToAction(nameof(Confirmation));
+	}
+
+	[HttpGet]
+	public async Task<IActionResult> Confirmation()
+	{
+		return View();
 	}
 }

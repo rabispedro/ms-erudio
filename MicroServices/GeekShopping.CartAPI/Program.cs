@@ -1,5 +1,7 @@
 using GeekShopping.CartAPI.Configs;
 using GeekShopping.CartAPI.Models.Context;
+using GeekShopping.CartAPI.RabbitMqSender;
+using GeekShopping.CartAPI.RabbitMqSender.Interfaces;
 using GeekShopping.CartAPI.Repositories;
 using GeekShopping.CartAPI.Repositories.Interface;
 using Microsoft.EntityFrameworkCore;
@@ -74,6 +76,7 @@ builder.Services.AddSingleton(MappingConfig.RegisterMaps().CreateMapper());
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 builder.Services.AddScoped<ICartRepository, CartRepository>();
+builder.Services.AddSingleton<IRabbitMqMessageSender, RabbitMqMessageSender>();
 
 // builder.Services.AddRouting(config =>
 // {

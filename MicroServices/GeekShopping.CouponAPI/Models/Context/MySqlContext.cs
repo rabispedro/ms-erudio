@@ -17,13 +17,13 @@ public class MySqlContext : DbContext
 			new()
 			{
 				Id = 1,
-				Code = "ERUDIO_2023_12",
+				CouponCode = "ERUDIO_2023_12",
 				DiscountAmount = 10.50M
 			},
 			new()
 			{
 				Id = 2,
-				Code = "ERUDIO_2024_01",
+				CouponCode = "ERUDIO_2024_01",
 				DiscountAmount = 50.00M
 			}
 		);

@@ -25,11 +25,11 @@ namespace GeekShopping.CouponAPI.Migrations
                         .HasColumnType("bigint")
                         .HasColumnName("id");
 
-                    b.Property<string>("Code")
+                    b.Property<string>("CouponCode")
                         .IsRequired()
-                        .HasMaxLength(150)
-                        .HasColumnType("varchar(150)")
-                        .HasColumnName("code");
+                        .HasMaxLength(30)
+                        .HasColumnType("varchar(30)")
+                        .HasColumnName("coupon_code");
 
                     b.Property<decimal>("DiscountAmount")
                         .HasColumnType("decimal(65,30)")
@@ -43,13 +43,13 @@ namespace GeekShopping.CouponAPI.Migrations
                         new
                         {
                             Id = 1L,
-                            Code = "ERUDIO_2023_12",
+                            CouponCode = "ERUDIO_2023_12",
                             DiscountAmount = 10.50m
                         },
                         new
                         {
                             Id = 2L,
-                            Code = "ERUDIO_2024_01",
+                            CouponCode = "ERUDIO_2024_01",
                             DiscountAmount = 50.00m
                         });
                 });
