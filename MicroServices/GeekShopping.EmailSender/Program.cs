@@ -1,8 +1,7 @@
-using GeekShopping.OrderAPI.MessageConsumer;
-using GeekShopping.OrderAPI.Models.Context;
-using GeekShopping.OrderAPI.RabbitMqSender;
-using GeekShopping.OrderAPI.RabbitMqSender.Interfaces;
-using GeekShopping.OrderAPI.Repositories;
+using GeekShopping.EmailSender.MessageConsumers;
+using GeekShopping.EmailSender.Models.Contexts;
+using GeekShopping.EmailSender.Repositories;
+using GeekShopping.EmailSender.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -12,6 +11,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddControllers();
+// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 
 builder.Services
 	.AddAuthentication("Bearer")
@@ -37,7 +37,7 @@ builder.Services.AddAuthorization(options =>
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
 {
-	options.SwaggerDoc("v1", new OpenApiInfo { Title = "GeekShopping.OrderAPI", Version = "v1" });
+	options.SwaggerDoc("v1", new OpenApiInfo { Title = "GeekShopping.EmailSender", Version = "v1" });
 	options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
 	{
 		Description = @"Enter 'Bearer' [space] and your token",
@@ -77,20 +77,22 @@ dbContextBuilder.UseMySql(
 	new MySqlServerVersion(new Version(8, 2, 0))
 );
 
-builder.Services.AddSingleton(new OrderRepository(dbContextBuilder.Options));
+builder.Services.AddSingleton(new EmailRepository(dbContextBuilder.Options));
 
-builder.Services.AddHostedService<RabbitMqCheckoutConsumer>();
+builder.Services.AddScoped<IEmailRepository, EmailRepository>();
+
 builder.Services.AddHostedService<RabbitMqPaymentConsumer>();
-builder.Services.AddSingleton<IRabbitMqMessageSender, RabbitMqMessageSender>();
 
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-	app.UseSwagger();
-	app.UseSwaggerUI();
+    app.UseSwagger();
+    app.UseSwaggerUI();
 }
 
 // app.UseHttpsRedirection();

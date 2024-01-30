@@ -43,7 +43,7 @@ public class RabbitMqCheckoutConsumer : BackgroundService
 		consumer.Received += (channel, evt) =>
 		{
 			var content = Encoding.UTF8.GetString(evt.Body.ToArray());
-			var checkoutHeaderVo = JsonSerializer.Deserialize<CheckoutHeaderVO>(content);
+			var checkoutHeaderVo = JsonSerializer.Deserialize<CheckoutHeaderMessage>(content);
 			ProccessOrder(checkoutHeaderVo).GetAwaiter().GetResult();
 			_channel.BasicAck(evt.DeliveryTag, false);
 		};
@@ -52,7 +52,7 @@ public class RabbitMqCheckoutConsumer : BackgroundService
 		return Task.CompletedTask;
 	}
 
-	private async Task ProccessOrder(CheckoutHeaderVO checkoutHeaderVo)
+	private async Task ProccessOrder(CheckoutHeaderMessage checkoutHeaderVo)
 	{
 		OrderHeader orderHeader = new()
 		{
@@ -90,7 +90,7 @@ public class RabbitMqCheckoutConsumer : BackgroundService
 
 		await _orderRepository.AddOrder(orderHeader);
 
-		var payment = new PaymentVO
+		var payment = new PaymentMessage
 		{
 			Name = orderHeader.FirstName + " " + orderHeader.LastName,
 			CardNumber = orderHeader.CardNumber,

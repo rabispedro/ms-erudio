@@ -1,6 +1,6 @@
-namespace GeekShopping.OrderAPI.Messages;
+namespace GeekShopping.EmailSender.Messages;
 
-public class UpdatePaymentResultVO
+public class UpdatePaymentResultMessage
 {
 	public long OrderId { get; set; }
 	public string Email { get; set; }

@@ -39,7 +39,7 @@ public class RabbitMqMessageSender : IRabbitMqMessageSender
 		{
 			WriteIndented = true
 		};
-		var json = JsonSerializer.Serialize<PaymentVO>((PaymentVO)message, options);
+		var json = JsonSerializer.Serialize<PaymentMessage>((PaymentMessage)message, options);
 
 		return Encoding.UTF8.GetBytes(json);
 	}

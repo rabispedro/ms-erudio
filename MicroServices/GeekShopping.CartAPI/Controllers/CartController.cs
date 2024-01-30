@@ -86,7 +86,7 @@ public class CartController : ControllerBase
 	}
 
 	[HttpPost("checkout")]
-	public async Task<ActionResult<CheckoutHeaderVO>> Checkout([FromBody] CheckoutHeaderVO checkoutHeaderVo)
+	public async Task<ActionResult<CheckoutHeaderMessage>> Checkout([FromBody] CheckoutHeaderMessage checkoutHeaderVo)
 	{
 		if (checkoutHeaderVo?.UserId == null)
 			return BadRequest();

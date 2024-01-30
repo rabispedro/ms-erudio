@@ -3,7 +3,7 @@ using GeekShopping.MessageBus;
 
 namespace GeekShopping.CartAPI.Messages;
 
-public class CheckoutHeaderVO : BaseMessage
+public class CheckoutHeaderMessage : BaseMessage
 {
 	public string UserId { get; set; }
 	public string CouponCode { get; set; }

@@ -65,7 +65,8 @@ public class RabbitMqPaymentConsumer : BackgroundService
 		
 		try
 		{
-			_rabbitMqMessageSender.SendMessage(paymentResultMessage, "order_payment_result_queue");
+			// _rabbitMqMessageSender.SendMessage(paymentResultMessage, "order_payment_result_queue");
+			_rabbitMqMessageSender.SendMessage(paymentResultMessage);
 		}
 		catch (Exception)
 		{

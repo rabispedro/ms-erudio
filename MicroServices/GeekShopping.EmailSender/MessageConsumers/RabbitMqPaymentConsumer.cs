@@ -1,28 +1,26 @@
 
 using System.Text;
 using System.Text.Json;
-using GeekShopping.OrderAPI.Messages;
-using GeekShopping.OrderAPI.Models;
-using GeekShopping.OrderAPI.RabbitMqSender.Interfaces;
-using GeekShopping.OrderAPI.Repositories;
-using GeekShopping.OrderDetailAPI.Models;
+using GeekShopping.EmailSender.Messages;
+using GeekShopping.EmailSender.Repositories;
+using GeekShopping.EmailSender.Repositories.Interfaces;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 
-namespace GeekShopping.OrderAPI.MessageConsumer;
+namespace GeekShopping.EmailSender.MessageConsumers;
 
 public class RabbitMqPaymentConsumer : BackgroundService
 {
-	private readonly OrderRepository _orderRepository;
+	private readonly EmailRepository _emailRepository;
 	private IConnection _connection;
 	private IModel _channel;
 	// private const string ExchangeName = "fanout_payment_update_exchange";
 	private const string ExchangeName = "direct_payment_update_exchange";
-	private const string PaymentOrderUpdateQueueName = "payment_order_update_queue";
+	private const string PaymentEmailUpdateQueueName = "payment_email_update_queue";
 
-	public RabbitMqPaymentConsumer(OrderRepository orderRepository)
+	public RabbitMqPaymentConsumer(EmailRepository emailRepository)
 	{
-		_orderRepository = orderRepository ?? throw new ArgumentNullException(nameof(orderRepository));
+		_emailRepository = emailRepository ?? throw new ArgumentNullException(nameof(emailRepository));
 
 		var factory = new ConnectionFactory
 		{
@@ -36,8 +34,8 @@ public class RabbitMqPaymentConsumer : BackgroundService
 
 		_channel.ExchangeDeclare(ExchangeName, ExchangeType.Direct);
 
-		_channel.QueueDeclare(PaymentOrderUpdateQueueName, false, false, false, null);
-		_channel.QueueBind(PaymentOrderUpdateQueueName, ExchangeName, "payment_order");
+		_channel.QueueDeclare(PaymentEmailUpdateQueueName, false, false, false, null);
+		_channel.QueueBind(PaymentEmailUpdateQueueName, ExchangeName, "payment_email");
 	}
 
 	protected override Task ExecuteAsync(CancellationToken stoppingToken)
@@ -49,20 +47,20 @@ public class RabbitMqPaymentConsumer : BackgroundService
 		{
 			var content = Encoding.UTF8.GetString(evt.Body.ToArray());
 			var updatePaymentResult = JsonSerializer.Deserialize<UpdatePaymentResultMessage>(content);
-			UpdatePaymentStatus(updatePaymentResult).GetAwaiter().GetResult();
+			ProccessLog(updatePaymentResult).GetAwaiter().GetResult();
 			_channel.BasicAck(evt.DeliveryTag, false);
 		};
 
-		_channel.BasicConsume(PaymentOrderUpdateQueueName, false, consumer);
+		_channel.BasicConsume(PaymentEmailUpdateQueueName, false, consumer);
 		return Task.CompletedTask;
 	}
 
-	private async Task UpdatePaymentStatus(UpdatePaymentResultMessage paymentResultVo)
+	private async Task ProccessLog(UpdatePaymentResultMessage paymentResultVo)
 	{
 
 		try
 		{
-			await _orderRepository.UpdateOrderPaymentStatus(paymentResultVo.OrderId, paymentResultVo.Status);
+			await _emailRepository.LogEmail(paymentResultVo);
 		}
 		catch (Exception)
 		{

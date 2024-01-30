@@ -2,7 +2,7 @@ using GeekShopping.MessageBus;
 
 namespace GeekShopping.OrderAPI.Messages;
 
-public class CheckoutHeaderVO : BaseMessage
+public class CheckoutHeaderMessage : BaseMessage
 {
 	public string UserId { get; set; }
 	public string CouponCode { get; set; }
@@ -17,5 +17,5 @@ public class CheckoutHeaderVO : BaseMessage
 	public string CVV { get; set; }
 	public string ExpiryMonthYear { get; set; }
 	public int CartTotalItems { get; set; }
-	public IEnumerable<CartDetailVO> CartDetails { get; set; }
+	public IEnumerable<CartDetailMessage> CartDetails { get; set; }
 }

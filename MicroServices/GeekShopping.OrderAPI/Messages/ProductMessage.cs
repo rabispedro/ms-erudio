@@ -1,6 +1,6 @@
 namespace GeekShopping.OrderAPI.Messages;
 
-public class ProductVO
+public class ProductMessage
 {
 	public long Id { get; set; }
 	public string Name { get; set; }
