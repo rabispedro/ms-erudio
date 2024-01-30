@@ -2,7 +2,7 @@ using GeekShopping.MessageBus;
 
 namespace GeekShopping.PaymentAPI.Messages;
 
-public class PaymentMessages : BaseMessage
+public class PaymentMessage : BaseMessage
 {
 	public long OrderId { get; set; }
 	public string Name { get; set; }

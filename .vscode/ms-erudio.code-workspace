@@ -21,6 +21,10 @@
 			"path": "../MicroServices/GeekShopping.OrderAPI"
 		},
 		{
+			"name": "PaymentAPI",
+			"path": "../MicroServices/GeekShopping.PaymentAPI"
+		},
+		{
 			"name": "ProductAPI",
 			"path": "../MicroServices/GeekShopping.ProductAPI"
 		},
@@ -50,6 +54,11 @@
 						"name": ".NET Core Launch (GeekShopping.IdentityServer)",
 						"folder": "IdentityServer",
 						"path": "../MicroServices/GeekShopping.IdentityServer"
+					},
+					{
+						"name": ".NET Core Launch (GeekShopping.PaymentAPI)",
+						"folder": "PaymentAPI",
+						"path": "../MicroServices/GeekShopping.PaymentAPI"
 					},
 					{
 						"name": ".NET Core Launch (GeekShopping.ProductAPI)",

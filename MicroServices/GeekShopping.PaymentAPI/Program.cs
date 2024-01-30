@@ -1,3 +1,7 @@
+using GeekShopping.PaymentAPI.MessageConsumer;
+using GeekShopping.PaymentAPI.RabbitMqSender;
+using GeekShopping.PaymentAPI.RabbitMqSender.Interfaces;
+using GeekShopping.PaymentProcessor;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 
@@ -58,6 +62,11 @@ builder.Services.AddSwaggerGen(options =>
 		}
 	});
 });
+
+builder.Services.AddSingleton<IProcessPayment, ProcessPayment>();
+
+builder.Services.AddHostedService<RabbitMqPaymentConsumer>();
+builder.Services.AddSingleton<IRabbitMqMessageSender, RabbitMqMessageSender>();
 
 var app = builder.Build();
 
