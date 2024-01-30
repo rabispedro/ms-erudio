@@ -1,0 +1,108 @@
+version: '3.7'
+
+services:
+  k3s:
+    image: rancher/k3s
+    container_name: k3s
+    privileged: true
+    command: server
+    tmpfs:
+      - /run
+      - /var/run
+    ulimits:
+      nproc: 65535
+      nofile:
+        soft: 65535
+        hard: 65535
+    environment:
+      - K3S_TOKEN=asomoq8c2j9q23ync@#%@%1
+      - K3S_KUBECONFIG_OUTPUT=/output/kubeconfig.yaml
+      - K3S_KUBECONFIG_MODE=666
+    ports:
+      - 8099:80 #Ingress controller port 80
+      - 2443:443 # Ingress controller port 443
+      - 6443:6443 # Kubernetes API Server
+      - 5000:5000 # Registry port 5000
+    volumes:
+      - k3s-server:/var/lib/rancher/k3s
+      - ./output:/output
+    networks:
+      - k8s
+
+  portainer:
+    image: portainer/portainer:latest
+    container_name: portainer
+
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    #  - /var/lib/docker/volumes:/var/lib/docker/volumes
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    networks:
+      - k8s
+
+  # order_api_db:
+  #   container_name: order_api_db
+  #   image: mysql:8.2.0
+  #   command: --default-authentication-plugin=mysql_native_password
+  #   restart: always
+  #   environment:
+  #     MYSQL_ROOT_PASSWORD: example
+  #   ports:
+  #     - 3307:3306
+
+  # coupon_api_db:
+  #   container_name: coupon_api_db
+  #   image: mysql:8.2.0
+  #   command: --default-authentication-plugin=mysql_native_password
+  #   restart: always
+  #   environment:
+  #     MYSQL_ROOT_PASSWORD: example
+  #   ports:
+  #     - 3307:3306
+
+  # cart_api_db: # identity_server_db product_api_db geek_shopping_messages
+  #   container_name: cart_api_db
+  #   image: mysql:8.2.0
+  #   command: --default-authentication-plugin=mysql_native_password
+  #   restart: always
+  #   environment:
+  #     MYSQL_ROOT_PASSWORD: example
+  #   ports:
+  #     - 3307:3306
+
+  # db: # order_api_db coupon_api_db cart_api_db identity_server_db product_api_db geek_shopping_messages
+  #   image: mysql:8.2.0
+  #   command: --default-authentication-plugin=mysql_native_password
+  #   restart: always
+  #   environment:
+  #     MYSQL_ROOT_PASSWORD: example
+  #   ports:
+  #     - 3307:3306
+
+  # db: # order_api_db coupon_api_db cart_api_db identity_server_db product_api_db geek_shopping_messages
+  #   image: mysql:8.2.0
+  #   command: --default-authentication-plugin=mysql_native_password
+  #   restart: always
+  #   environment:
+  #     MYSQL_ROOT_PASSWORD: example
+  #   ports:
+  #     - 3307:3306
+
+  ms_erudio_db: # order_api_db coupon_api_db cart_api_db identity_server_db product_api_db geek_shopping_messages
+    image: mysql:8.2.0
+    container_name: ms_erudio_db
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: admin@123
+    ports:
+      - 3306:3306
+
+volumes:
+  k3s-server:
+  esdata:
+    driver: local
+networks:
+  k8s:
