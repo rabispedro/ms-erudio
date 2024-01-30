@@ -21,12 +21,12 @@ public class CouponRepository : ICouponRepository
 	public async Task<CouponVO> FindByCode(string code, string token)
 	{
 		_httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-		var response = await _httpClient.GetAsync($"{BasePath}/coupon/{code}");
+		var response = await _httpClient.GetAsync($"{BasePath}/{code}");
 		if (response.StatusCode != HttpStatusCode.OK)
 			return new CouponVO();
 
 		var content = await response.Content.ReadAsStringAsync();
 
-		return JsonSerializer.Deserialize<CouponVO>(content);
+		return JsonSerializer.Deserialize<CouponVO>(content, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
 	}
 }

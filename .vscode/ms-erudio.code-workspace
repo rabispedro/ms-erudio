@@ -17,12 +17,12 @@
 			"path": "../MicroServices/GeekShopping.IdentityServer"
 		},
 		{
-			"name": "ProductAPI",
-			"path": "../MicroServices/GeekShopping.ProductAPI"
-		},
-		{
 			"name": "OrderAPI",
 			"path": "../MicroServices/GeekShopping.OrderAPI"
+		},
+		{
+			"name": "ProductAPI",
+			"path": "../MicroServices/GeekShopping.ProductAPI"
 		},
 		{
 			"name": "Web",
@@ -36,34 +36,33 @@
 			{
 				"name": "Launch Servers & Web",
 				"configurations": [
-					".NET Core Launch (web)",
 					{
-						"name": ".NET Core Launch (web)",
+						"name": ".NET Core Launch (GeekShopping.CartAPI)",
 						"folder": "CartAPI",
 						"path": "../MicroServices/GeekShopping.CartAPI"
 					},
 					{
-						"name": ".NET Core Launch (web)",
+						"name": ".NET Core Launch (GeekShopping.CouponAPI)",
 						"folder": "CouponAPI",
 						"path": "../MicroServices/GeekShopping.CouponAPI"
 					},
 					{
-						"name": ".NET Core Launch (web)",
+						"name": ".NET Core Launch (GeekShopping.IdentityServer)",
 						"folder": "IdentityServer",
 						"path": "../MicroServices/GeekShopping.IdentityServer"
 					},
 					{
-						"name": ".NET Core Launch (web)",
+						"name": ".NET Core Launch (GeekShopping.ProductAPI)",
 						"folder": "ProductAPI",
 						"path": "../MicroServices/GeekShopping.ProductAPI"
 					},
 					{
-						"name": ".NET Core Launch (web)",
+						"name": ".NET Core Launch (GeekShopping.OrderAPI)",
 						"folder": "OrderAPI",
 						"path": "../MicroServices/GeekShopping.OrderAPI"
 					},
 					{
-						"name": ".NET Core Launch (web)",
+						"name": ".NET Core Launch (GeekShopping.Web)",
 						"folder": "Web",
 						"path": "../Frontend/GeekShopping.Web"
 					},

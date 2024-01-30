@@ -42,55 +42,7 @@ services:
     networks:
       - k8s
 
-  # order_api_db:
-  #   container_name: order_api_db
-  #   image: mysql:8.2.0
-  #   command: --default-authentication-plugin=mysql_native_password
-  #   restart: always
-  #   environment:
-  #     MYSQL_ROOT_PASSWORD: example
-  #   ports:
-  #     - 3307:3306
-
-  # coupon_api_db:
-  #   container_name: coupon_api_db
-  #   image: mysql:8.2.0
-  #   command: --default-authentication-plugin=mysql_native_password
-  #   restart: always
-  #   environment:
-  #     MYSQL_ROOT_PASSWORD: example
-  #   ports:
-  #     - 3307:3306
-
-  # cart_api_db: # identity_server_db product_api_db geek_shopping_messages
-  #   container_name: cart_api_db
-  #   image: mysql:8.2.0
-  #   command: --default-authentication-plugin=mysql_native_password
-  #   restart: always
-  #   environment:
-  #     MYSQL_ROOT_PASSWORD: example
-  #   ports:
-  #     - 3307:3306
-
-  # db: # order_api_db coupon_api_db cart_api_db identity_server_db product_api_db geek_shopping_messages
-  #   image: mysql:8.2.0
-  #   command: --default-authentication-plugin=mysql_native_password
-  #   restart: always
-  #   environment:
-  #     MYSQL_ROOT_PASSWORD: example
-  #   ports:
-  #     - 3307:3306
-
-  # db: # order_api_db coupon_api_db cart_api_db identity_server_db product_api_db geek_shopping_messages
-  #   image: mysql:8.2.0
-  #   command: --default-authentication-plugin=mysql_native_password
-  #   restart: always
-  #   environment:
-  #     MYSQL_ROOT_PASSWORD: example
-  #   ports:
-  #     - 3307:3306
-
-  ms_erudio_db: # order_api_db coupon_api_db cart_api_db identity_server_db product_api_db geek_shopping_messages
+  ms_erudio_db:
     image: mysql:8.2.0
     container_name: ms_erudio_db
     command: --default-authentication-plugin=mysql_native_password
@@ -99,6 +51,17 @@ services:
       MYSQL_ROOT_PASSWORD: admin@123
     ports:
       - 3306:3306
+    volumes:
+      - ./mysql/volume:/var/lib/mysql
+
+  ms_erudio_messages:
+    image: rabbitmq:3.9.29-management-alpine
+    container_name: ms_erudio_messages
+    restart: always
+    hostname: ms-erudio-rabbit
+    ports:
+      - 5672:5672
+      - 15672:15672
 
 volumes:
   k3s-server:

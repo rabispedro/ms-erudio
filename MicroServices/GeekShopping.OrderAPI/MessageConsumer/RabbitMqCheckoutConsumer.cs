@@ -3,6 +3,7 @@ using System.Text;
 using System.Text.Json;
 using GeekShopping.OrderAPI.Messages;
 using GeekShopping.OrderAPI.Models;
+using GeekShopping.OrderAPI.RabbitMqSender.Interfaces;
 using GeekShopping.OrderAPI.Repositories;
 using GeekShopping.OrderDetailAPI.Models;
 using RabbitMQ.Client;
@@ -15,14 +16,16 @@ public class RabbitMqCheckoutConsumer : BackgroundService
 	private readonly OrderRepository _orderRepository;
 	private IConnection _connection;
 	private IModel _channel;
+	private IRabbitMqMessageSender _rabbitMqMessageSender;
 
-	public RabbitMqCheckoutConsumer(OrderRepository orderRepository)
+	public RabbitMqCheckoutConsumer(OrderRepository orderRepository, IRabbitMqMessageSender rabbitMqMessageSender)
 	{
 		_orderRepository = orderRepository ?? throw new ArgumentNullException(nameof(orderRepository));
+		_rabbitMqMessageSender = rabbitMqMessageSender ?? throw new ArgumentNullException(nameof(rabbitMqMessageSender));
 
 		var factory = new ConnectionFactory
 		{
-			HostName = "172.17.0.6",
+			HostName = "localhost",
 			Password = "guest",
 			UserName = "guest"
 		};
@@ -86,5 +89,25 @@ public class RabbitMqCheckoutConsumer : BackgroundService
 		}
 
 		await _orderRepository.AddOrder(orderHeader);
+
+		var payment = new PaymentVO
+		{
+			Name = orderHeader.FirstName + " " + orderHeader.LastName,
+			CardNumber = orderHeader.CardNumber,
+			CVV = orderHeader.CVV,
+			Email = orderHeader.Email,
+			ExpiryMonthYear = orderHeader.ExpiryMonthYear,
+			OrderId = orderHeader.Id,
+			PurchaseAmount = orderHeader.PurchaseAmount
+		};
+
+		try
+		{
+			_rabbitMqMessageSender.SendMessage(payment, "order_payment_proccess_queue");
+		}
+		catch (Exception)
+		{
+			throw;
+		}
 	}
 }
