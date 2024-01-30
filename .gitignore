@@ -304,6 +304,8 @@ __pycache__/
 # OpenCover UI analysis results
 OpenCover/
 
-# Kubernetes
-/mysql
-/output
+# Kubernetes Volumes
+/mysql**
+/output**
+/postgresql**
+/sonarqube**

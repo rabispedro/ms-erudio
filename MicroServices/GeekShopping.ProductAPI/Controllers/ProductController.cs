@@ -11,7 +11,7 @@ namespace GeekShopping.ProductAPI.Controllers;
 [Route("api/v1/[controller]")]
 public class ProductController : ControllerBase
 {
-	private readonly ILogger<ProductController> _logger;
+	public ILogger<ProductController> _logger;
 	private readonly IProductRepository _repository;
 
 	public ProductController(ILogger<ProductController> logger, IProductRepository repository)
